@@ -1,0 +1,35 @@
+services:
+  # FastAPI Backend Web Service
+  - type: web
+    name: fintrack-backend
+    env: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fintrack-postgres
+          property: connectionString
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 1440
+      - key: ENVIRONMENT
+        value: production
+      - key: FRONTEND_URL
+        value: https://fintrack-app.vercel.app
+
+databases:
+  # Managed PostgreSQL Database on Render
+  - name: fintrack-postgres
+    databaseName: fintrack_db
+    user: fintrack_user
+    region: oregon
+    plan: free

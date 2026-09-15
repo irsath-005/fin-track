@@ -37,7 +37,15 @@ const Register = () => {
       showToast('Account created successfully! Welcome to FinTrack.');
       navigate('/dashboard');
     } catch (err) {
-      const msg = err.response?.data?.detail || 'Registration failed. Please try again.';
+      let msg = 'Registration failed. Please try again.';
+      if (err.response?.data?.detail) {
+        const detail = err.response.data.detail;
+        if (typeof detail === 'string') {
+          msg = detail;
+        } else if (Array.isArray(detail)) {
+          msg = detail.map((d) => d.msg || d.message || 'Invalid input').join('. ');
+        }
+      }
       setError(msg);
       showToast(msg, 'error');
     } finally {

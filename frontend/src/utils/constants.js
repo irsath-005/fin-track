@@ -5,11 +5,20 @@ export const INCOME_CATEGORIES = [
   "Bonus",
   "Interest",
   "Rental",
+  "Dividends",
+  "Investments",
+  "Side Hustle",
+  "Commissions",
+  "Grants & Scholarships",
+  "Gifts & Allowances",
+  "Refunds & Cashbacks",
+  "Crypto Gains",
   "Other"
 ];
 
 export const EXPENSE_CATEGORIES = [
   "Food",
+  "Groceries",
   "Shopping",
   "Transportation",
   "Rent",
@@ -20,6 +29,13 @@ export const EXPENSE_CATEGORIES = [
   "Travel",
   "EMI",
   "Subscription",
+  "Fitness & Sports",
+  "Personal Care",
+  "Home Maintenance",
+  "Insurance",
+  "Taxes",
+  "Gifts & Donations",
+  "Pet Care",
   "Other"
 ];
 
@@ -51,6 +67,7 @@ export const PAYMENT_METHODS = [
 
 export const CATEGORY_COLORS = {
   Food: "#F97316",
+  Groceries: "#84CC16",
   Shopping: "#EC4899",
   Transportation: "#8B5CF6",
   Rent: "#3B82F6",
@@ -61,6 +78,13 @@ export const CATEGORY_COLORS = {
   Travel: "#6366F1",
   EMI: "#F43F5E",
   Subscription: "#14B8A6",
+  "Fitness & Sports": "#10B981",
+  "Personal Care": "#F472B6",
+  "Home Maintenance": "#A855F7",
+  Insurance: "#0EA5E9",
+  Taxes: "#64748B",
+  "Gifts & Donations": "#F43F5E",
+  "Pet Care": "#F59E0B",
   Other: "#64748B",
   Salary: "#10B981",
   Freelance: "#3B82F6",
@@ -68,6 +92,14 @@ export const CATEGORY_COLORS = {
   Bonus: "#F59E0B",
   Interest: "#06B6D4",
   Rental: "#EC4899",
+  Dividends: "#10B981",
+  Investments: "#6366F1",
+  "Side Hustle": "#8B5CF6",
+  Commissions: "#F59E0B",
+  "Grants & Scholarships": "#0EA5E9",
+  "Gifts & Allowances": "#F472B6",
+  "Refunds & Cashbacks": "#84CC16",
+  "Crypto Gains": "#F97316",
   Stocks: "#3B82F6",
   "Mutual Funds": "#10B981",
   SIP: "#8B5CF6",
@@ -79,3 +111,4 @@ export const CATEGORY_COLORS = {
   PPF: "#14B8A6",
   NPS: "#EC4899"
 };
+

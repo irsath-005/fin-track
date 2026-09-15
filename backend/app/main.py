@@ -30,6 +30,8 @@ allowed_origins = [
     "http://127.0.0.1:5173",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://fintrackixzu.vercel.app",
+    "https://fintrack-app.vercel.app",
 ]
 if settings.FRONTEND_URL and settings.FRONTEND_URL not in allowed_origins:
     allowed_origins.append(settings.FRONTEND_URL.rstrip("/"))

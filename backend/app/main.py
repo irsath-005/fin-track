@@ -11,10 +11,18 @@ from app.routes import (
     analytics_router
 )
 
+IS_VERCEL = bool(os.environ.get("VERCEL") or os.environ.get("VERCEL_ENV"))
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Automatically initialize database schema on startup
-    init_db()
+    # Only run init_db locally or if not on Vercel.
+    # On Vercel (Supabase already has schema), skip the heavy CREATE TABLE
+    # round-trip on every cold-start to avoid 10-15s timeout on first request.
+    if not IS_VERCEL:
+        try:
+            init_db()
+        except Exception as e:
+            print(f"DB init warning: {e}")
     yield
 
 app = FastAPI(
@@ -24,24 +32,30 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS configuration: Allow localhost development and production frontend URL
-allowed_origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://fintrack-seven-mu.vercel.app",
-    "https://fintrackixzu.vercel.app",
-    "https://fintrack-app.vercel.app",
-]
-if settings.FRONTEND_URL and settings.FRONTEND_URL not in allowed_origins:
-    allowed_origins.append(settings.FRONTEND_URL.rstrip("/"))
+# CORS configuration: Allow localhost development and production frontend URLs
+# On Vercel serverless, use wildcard to avoid preflight rejecting Vercel preview URLs
+if IS_VERCEL or settings.ENVIRONMENT != "production":
+    # Allow everything on Vercel (same-domain API requests) and local dev
+    cors_origins = ["*"]
+    cors_credentials = False  # credentials=True is not compatible with origin="*"
+else:
+    cors_origins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://fintrack-seven-mu.vercel.app",
+        "https://fintrackixzu.vercel.app",
+        "https://fintrack-app.vercel.app",
+    ]
+    if settings.FRONTEND_URL and settings.FRONTEND_URL not in cors_origins:
+        cors_origins.append(settings.FRONTEND_URL.rstrip("/"))
+    cors_credentials = True
 
-# If wildcard is explicitly not desired, use the explicit list; allow Vercel previews if configured
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins if settings.ENVIRONMENT == "production" else ["*"],
-    allow_credentials=True,
+    allow_origins=cors_origins,
+    allow_credentials=cors_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )

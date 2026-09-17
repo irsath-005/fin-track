@@ -10,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [warmingUp, setWarmingUp] = useState(false);
   const [error, setError] = useState('');
 
   const { register } = useAuth();
@@ -26,6 +27,8 @@ const Register = () => {
     }
 
     setLoading(true);
+    // Show warm-up notice after 3s for Vercel cold-start UX
+    const warmTimer = setTimeout(() => setWarmingUp(true), 3000);
 
     try {
       await register({
@@ -45,11 +48,21 @@ const Register = () => {
         } else if (Array.isArray(detail)) {
           msg = detail.map((d) => d.msg || d.message || 'Invalid input').join('. ');
         }
+      } else if (err.code === 'ERR_NETWORK' || err.message === 'Network Error') {
+        msg = 'Network error – please check your connection and try again.';
+      } else if (err.response?.status === 400) {
+        msg = err.response?.data?.detail || 'Registration failed. This email may already be registered.';
+      } else if (err.response?.status === 422) {
+        msg = 'Please fill in all fields correctly.';
+      } else if (err.response?.status >= 500) {
+        msg = 'Server error. Please try again in a moment.';
       }
       setError(msg);
       showToast(msg, 'error');
     } finally {
+      clearTimeout(warmTimer);
       setLoading(false);
+      setWarmingUp(false);
     }
   };
 
@@ -154,7 +167,13 @@ const Register = () => {
               disabled={loading}
               className="w-full mt-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] disabled:opacity-50 text-white text-sm font-semibold rounded-xl shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center space-x-2"
             >
-              <span>{loading ? 'Creating Account...' : 'Register'}</span>
+              <span>
+                {loading
+                  ? warmingUp
+                    ? 'Warming up server...'
+                    : 'Creating Account...'
+                  : 'Register'}
+              </span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>

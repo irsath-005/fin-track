@@ -24,6 +24,7 @@ const getApiBaseUrl = () => {
 
 const api = axios.create({
   baseURL: getApiBaseUrl(),
+  timeout: 20000, // 20s timeout – handles Vercel cold-start delays gracefully
   headers: {
     'Content-Type': 'application/json',
   },

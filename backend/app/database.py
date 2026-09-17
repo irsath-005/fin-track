@@ -38,7 +38,7 @@ def init_db():
                 if "otp_code" not in columns:
                     conn.execute(text("ALTER TABLE users ADD COLUMN otp_code VARCHAR(10)"))
                 if "otp_expires_at" not in columns:
-                    conn.execute(text("ALTER TABLE users ADD COLUMN otp_expires_at DATETIME"))
+                    conn.execute(text("ALTER TABLE users ADD COLUMN otp_expires_at TIMESTAMP"))
                 conn.commit()
     except Exception as e:
         print(f"Migration notice: {e}")

@@ -26,8 +26,8 @@ class Settings(BaseSettings):
 
     @property
     def sync_database_url(self) -> str:
+        url = (self.DATABASE_URL or "").strip("'\"").strip()
         # On Vercel Serverless Functions, store SQLite file in writable /tmp directory if postgres is not configured
-        url = self.DATABASE_URL
         if ("VERCEL" in os.environ or "AWS_LAMBDA_FUNCTION_NAME" in os.environ) and url.startswith("sqlite"):
             return "sqlite:////tmp/fintrack.db"
         if url.startswith("postgres://"):

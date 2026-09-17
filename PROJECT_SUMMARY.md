@@ -19,7 +19,7 @@
 | **Local Development** | React Frontend UI | [http://localhost:5173](http://localhost:5173) |
 | **Local Development** | FastAPI Backend Base | [http://localhost:8000](http://localhost:8000) |
 | **Local Development** | Interactive API Docs | [http://localhost:8000/docs](http://localhost:8000/docs) |
-| **Database File** | Local SQLite File | [fintrack.db](file:///c:/Users/irsat/OneDrive/Desktop/expense%20tracker/backend/fintrack.db) |
+| **Database** | Supabase PostgreSQL Cloud | [Supabase Project](https://supabase.com/dashboard/project/iutsiwsvourdcnrqtxjf) |
 
 ---
 

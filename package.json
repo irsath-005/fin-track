@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "dev": "cd frontend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && python -m uvicorn app.main:app --reload",
+    "build": "cd frontend && npm install && npm run build",
+    "test": "cd backend && python -m pytest"
   }
 }

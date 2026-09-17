@@ -12,8 +12,8 @@
 
 | Environment | Service | URL / Link |
 |---|---|---|
-| **Cloud Production** | Vercel Live App | [https://fintrackixzu.vercel.app](https://fintrackixzu.vercel.app) |
-| **Cloud Production** | Vercel API Health | [https://fintrackixzu.vercel.app/health](https://fintrackixzu.vercel.app/health) |
+| **Cloud Production** | Vercel Live App | [https://fintrack-seven-mu.vercel.app](https://fintrack-seven-mu.vercel.app) |
+| **Cloud Production** | Vercel API Health | [https://fintrack-seven-mu.vercel.app/health](https://fintrack-seven-mu.vercel.app/health) |
 | **Cloud Production** | Vercel Dashboard | [https://vercel.com/fin-track8](https://vercel.com/fin-track8) |
 | **GitHub Repository** | Source Code Repo | [https://github.com/irsath-005/fin-track](https://github.com/irsath-005/fin-track) |
 | **Local Development** | React Frontend UI | [http://localhost:5173](http://localhost:5173) |

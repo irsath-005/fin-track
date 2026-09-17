@@ -58,7 +58,7 @@ const SavingsPage = () => {
     exportToCSV(exportData, `FinTrack_Savings_${selectedYear}.csv`);
   };
 
-  if (loading) return <PageLoader message="Calculating savings metrics from database..." />;
+  if (loading) return <PageLoader message="Calculating savings metrics..." />;
 
   const currentYearTotalSavings = monthlyBreakdown.reduce((acc, curr) => acc + curr.savings, 0);
 

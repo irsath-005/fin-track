@@ -84,7 +84,7 @@ const ReportsPage = () => {
     { value: 12, name: 'December' },
   ];
 
-  if (loading) return <PageLoader message="Compiling analytical financial reports..." />;
+  if (loading) return <PageLoader message="Loading financial reports..." />;
 
   return (
     <div className="space-y-6">

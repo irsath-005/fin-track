@@ -194,7 +194,7 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) return <PageLoader message="Connecting to PostgreSQL database..." />;
+  if (loading) return <PageLoader message="Loading your dashboard..." />;
 
   return (
     <div className="space-y-6">

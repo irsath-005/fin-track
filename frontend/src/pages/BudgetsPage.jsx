@@ -213,7 +213,7 @@ const BudgetsPage = () => {
 
       {/* Budgets Progress Grid */}
       {loading ? (
-        <div className="p-8"><PageLoader message="Calculating real-time budget utilization..." /></div>
+        <div className="p-8"><PageLoader message="Loading budget status..." /></div>
       ) : (!budgetStatus?.budgets || budgetStatus.budgets.length === 0) ? (
         <div className="glass-card p-6">
           <EmptyState

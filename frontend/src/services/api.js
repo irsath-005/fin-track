@@ -2,23 +2,20 @@ import axios from 'axios';
 
 const getApiBaseUrl = () => {
   const envUrl = import.meta.env.VITE_API_URL;
+  const isLocalUrl = !envUrl || envUrl.includes('localhost') || envUrl.includes('127.0.0.1');
 
-  // 1. If VITE_API_URL is configured for an external production backend (e.g. Render backend)
-  if (envUrl && !envUrl.includes('localhost') && !envUrl.includes('127.0.0.1')) {
+  // 1. If VITE_API_URL is a real external URL (not localhost), always use it
+  if (envUrl && !isLocalUrl) {
     return envUrl;
   }
 
-  // 2. In production mode (e.g. Vercel deployment), if no external API URL is given,
-  // use relative URL ("") so backend API requests route to the same domain per vercel.json
+  // 2. In production (Vercel), always use relative URL '' so requests route
+  //    to the same domain via vercel.json → Python serverless function
   if (import.meta.env.MODE === 'production') {
-    return envUrl || '';
+    return '';
   }
 
-  // 3. Local development fallback (including local IP testing like 192.168.x.x)
-  if (typeof window !== 'undefined' && window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    const host = window.location.hostname;
-    return `http://${host}:8000`;
-  }
+  // 3. Local development: use localhost backend
   return 'http://localhost:8000';
 };
 

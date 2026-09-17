@@ -1,6 +1,6 @@
 import os
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import init_db
@@ -74,7 +74,7 @@ def root():
 def health_check():
     return {"status": "healthy"}
 
-# Mount API Routers
+# Mount API Routers (root paths)
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(income_router)
@@ -85,6 +85,21 @@ app.include_router(goals_router)
 app.include_router(transactions_router)
 app.include_router(dashboard_router)
 app.include_router(analytics_router)
+
+# Mount API Routers with /api prefix for clean SPA routing separation on Vercel & local
+api_router = APIRouter(prefix="/api")
+api_router.include_router(auth_router)
+api_router.include_router(users_router)
+api_router.include_router(income_router)
+api_router.include_router(expenses_router)
+api_router.include_router(investments_router)
+api_router.include_router(budgets_router)
+api_router.include_router(goals_router)
+api_router.include_router(transactions_router)
+api_router.include_router(dashboard_router)
+api_router.include_router(analytics_router)
+api_router.get("/health", tags=["Health"])(health_check)
+app.include_router(api_router)
 
 if __name__ == "__main__":
     import uvicorn

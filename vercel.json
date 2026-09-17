@@ -22,48 +22,32 @@
       "dest": "api/index.py"
     },
     {
-      "src": "/users/(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/income(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/expenses(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/investments(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/budgets(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/goals(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/transactions(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/dashboard/summary",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/analytics/(.*)",
-      "dest": "api/index.py"
-    },
-    {
       "src": "/health",
       "dest": "api/index.py"
     },
     {
-      "src": "/(.*)",
+      "src": "/docs",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/openapi.json",
+      "dest": "api/index.py"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "frontend/assets/$1"
+    },
+    {
+      "src": "/favicon.svg",
+      "dest": "frontend/favicon.svg"
+    },
+    {
+      "src": "/(.*\\.(?:js|css|svg|ico|png|jpg|jpeg|gif|webp|woff|woff2|ttf|json|txt))",
       "dest": "frontend/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/index.html"
     }
   ]
 }

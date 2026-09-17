@@ -4,19 +4,21 @@ const getApiBaseUrl = () => {
   const envUrl = import.meta.env.VITE_API_URL;
   const isLocalUrl = !envUrl || envUrl.includes('localhost') || envUrl.includes('127.0.0.1');
 
-  // 1. If VITE_API_URL is a real external URL (not localhost), always use it
+  // 1. If VITE_API_URL is a real external URL (not localhost), use it with /api
   if (envUrl && !isLocalUrl) {
-    return envUrl;
+    const trimmed = envUrl.replace(/\/+$/, '');
+    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
   }
 
-  // 2. In production (Vercel), always use relative URL '' so requests route
-  //    to the same domain via vercel.json → Python serverless function
+  // 2. In production (Vercel), always use relative URL '/api' so API requests route
+  //    to /api/* via vercel.json → Python serverless function, cleanly separated from
+  //    client-side React SPA routes (/dashboard, /expenses, /budgets, etc.)
   if (import.meta.env.MODE === 'production') {
-    return '';
+    return '/api';
   }
 
-  // 3. Local development: use localhost backend
-  return 'http://localhost:8000';
+  // 3. Local development: use localhost backend with /api
+  return 'http://localhost:8000/api';
 };
 
 const api = axios.create({
